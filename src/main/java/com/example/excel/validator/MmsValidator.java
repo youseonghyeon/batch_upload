@@ -26,13 +26,13 @@ public class MmsValidator implements MessageValidator {
         if (!(param instanceof MmsValidatorParam mmsValidatorParam)) {
             throw new IllegalArgumentException("param is not instance of MmsValidatorParam");
         }
-        isEmptyOrInvalidLength(param);
+        isEmptyOrInvalidLength(mmsValidatorParam);
 
 
         return new ArrayList<>();
     }
 
-    private void isEmptyOrInvalidLength(MessageValidatorParam param) {
+    private void isEmptyOrInvalidLength(MmsValidatorParam param) {
         List<ValidatorBindingResult> bindingResults = new ArrayList<>();
         String messageName = param.getMessageName();
         if (outBound(messageName, 10, 600)) {

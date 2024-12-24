@@ -9,10 +9,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public abstract class MessageValidatorParam {
 
-    private final String messageName;
-    private final String messageContent;
-
-
 
 
 }
