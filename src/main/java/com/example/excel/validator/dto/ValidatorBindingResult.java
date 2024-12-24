@@ -1,11 +1,11 @@
-package com.example.excel.service.validator.dto;
+package com.example.excel.validator.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ValidatorBindingReuslt {
+public class ValidatorBindingResult {
 
     private final String webRejectMessage;
     private final String batchRejectMessage;

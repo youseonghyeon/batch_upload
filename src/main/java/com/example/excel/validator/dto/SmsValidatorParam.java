@@ -1,4 +1,4 @@
-package com.example.excel.service.validator.dto;
+package com.example.excel.validator.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

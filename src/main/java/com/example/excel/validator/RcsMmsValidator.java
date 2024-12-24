@@ -1,10 +1,11 @@
-package com.example.excel.service.validator;
+package com.example.excel.validator;
 
-import com.example.excel.service.validator.dto.MessageValidatorParam;
-import com.example.excel.service.validator.dto.RcsMmsValidatorParam;
-import com.example.excel.service.validator.dto.ValidatorBindingReuslt;
+import com.example.excel.validator.dto.MessageValidatorParam;
+import com.example.excel.validator.dto.RcsMmsValidatorParam;
+import com.example.excel.validator.dto.ValidatorBindingResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,25 +15,27 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class RcsMmsValidator implements MessageValidator {
 
+    private final Validator validator;
+
     @Override
     public boolean supports(MessageType messageType) {
         return MessageType.RCS.equals(messageType);
     }
 
     @Override
-    public List<ValidatorBindingReuslt> validate(MessageValidatorParam param) {
+    public List<ValidatorBindingResult> validate(MessageValidatorParam param) {
         if (!(param instanceof RcsMmsValidatorParam rcsMmsValidatorParam)) {
             throw new IllegalArgumentException("param is not instance of RcsMmsValidatorParam");
         }
 
-        List<ValidatorBindingReuslt> bindingResult = new ArrayList<>();
+        List<ValidatorBindingResult> bindingResult = new ArrayList<>();
         Random random = new Random();
         int i = random.nextInt() % 2;
         if (i == 1) {
-            bindingResult.add(new ValidatorBindingReuslt("web reject messages", "batch reject messages"));
+            bindingResult.add(new ValidatorBindingResult("web reject messages", "batch reject messages"));
         }
         if (rcsMmsValidatorParam.getMessageContent() == null) {
-            bindingResult.add(new ValidatorBindingReuslt("rcsMms", "rcsMms is required"));
+            bindingResult.add(new ValidatorBindingResult("rcsMms", "rcsMms is required"));
         }
 
         return bindingResult;

@@ -2,10 +2,10 @@ package com.example.excel.controller;
 
 import com.example.excel.repository.BatchUploadStore;
 import com.example.excel.service.ExcelReader;
-import com.example.excel.service.validator.MessageValidator;
-import com.example.excel.service.validator.ValidatorFactory;
-import com.example.excel.service.validator.dto.RcsMmsValidatorParam;
-import com.example.excel.service.validator.dto.ValidatorBindingReuslt;
+import com.example.excel.validator.MessageValidator;
+import com.example.excel.validator.ValidatorFactory;
+import com.example.excel.validator.dto.RcsMmsValidatorParam;
+import com.example.excel.validator.dto.ValidatorBindingResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class MyController {
         // 2. db 저장
         Map<String, Object> map = saveBatchExcelDataToMemory(lists);
         // 3. validation
-        Map<String, List<ValidatorBindingReuslt>> bindingResultMap = validateParameters(map);
+        Map<String, List<ValidatorBindingResult>> bindingResultMap = validateParameters(map);
 
         // 4. 결과 반환
         for (String key : bindingResultMap.keySet()) {
@@ -68,15 +68,15 @@ public class MyController {
         return map;
     }
 
-    private Map<String, List<ValidatorBindingReuslt>> validateParameters(Map<String, Object> map) {
-        Map<String, List<ValidatorBindingReuslt>> result = new LinkedHashMap<>();
+    private Map<String, List<ValidatorBindingResult>> validateParameters(Map<String, Object> map) {
+        Map<String, List<ValidatorBindingResult>> result = new LinkedHashMap<>();
         for (String key : map.keySet()) {
             ExcelData excelData = batchUploadStore.getExcelData(key);
             MessageValidator messageValidator = validatorFactory.getMessageValidator(excelData.getMessageType());
 
             // 테스트용 임시 데이터
             RcsMmsValidatorParam rcsMmsValidatorParam = excelData.toRcsMmsValidatorParam();
-            List<ValidatorBindingReuslt> validate = messageValidator.validate(rcsMmsValidatorParam);
+            List<ValidatorBindingResult> validate = messageValidator.validate(rcsMmsValidatorParam);
 
             if (!validate.isEmpty()) {
                 result.put(key, validate);

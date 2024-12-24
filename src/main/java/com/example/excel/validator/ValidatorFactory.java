@@ -1,4 +1,4 @@
-package com.example.excel.service.validator;
+package com.example.excel.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
