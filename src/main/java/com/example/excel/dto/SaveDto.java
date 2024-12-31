@@ -1,23 +1,11 @@
-package com.example.excel.controller;
+package com.example.excel.dto;
 
-import com.example.excel.dto.SaveDto;
-import com.example.excel.validator.MessageType;
-import com.example.excel.validator.dto.MmsValidatorParam;
-import com.example.excel.validator.dto.RcsCarouselValidatorParam;
-import com.example.excel.validator.dto.RcsMmsValidatorParam;
-import com.example.excel.validator.dto.SmsValidatorParam;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Slf4j
-@Getter
-@ToString
-public class ExcelData {
-
-    /**
-     * 절대 필드의 순서를 바꾸지 마시오
-     */
+@Data
+@AllArgsConstructor
+public class SaveDto {
     private String crmStatus; // CRM여부
     private String messageName; // 메시지명
     private String messageTypeValue; // 메시지구분값
@@ -72,43 +60,4 @@ public class ExcelData {
     private String slide3Button2; // 슬라이드3버튼2
     private String slide3Button2Url; // 슬라이드3버튼2URL
     private String optOutCallbackNumber; // 수신거부콜백번호
-
-    public MessageType getMessageType() {
-        return MessageType.valueOf(messageTypeValue);
-    }
-
-    public SmsValidatorParam toSmsValidatorParam() {
-        return new SmsValidatorParam(messageName, messageContent);
-    }
-
-    public MmsValidatorParam toMmsValidatorParam() {
-        return new MmsValidatorParam(messageName, messageContent);
-    }
-
-    public RcsMmsValidatorParam toRcsMmsValidatorParam() {
-        return new RcsMmsValidatorParam(messageName, messageContent);
-    }
-
-    public RcsCarouselValidatorParam toRcsCarouselValidatorParam() {
-        return new RcsCarouselValidatorParam(messageName, messageContent);
-    }
-
-    public TestSendDto toTestSendDto() {
-        return new TestSendDto(messageTitle, messageContent, senderNumber1, senderNumber2, senderNumber3, senderNumber4, senderNumber5,
-                variableText1, variableText2, variableText3, variableText4, variableText5, variableText6, variableText7, variableText8,
-                variableText9, variableText10);
-    }
-
-
-    public SaveDto toSaveDto() {
-        return new SaveDto(crmStatus, messageName, messageTypeValue, messageAttributeValue, messageTitle, fourReviewPoints, messageContent,
-                reservationDate, reservationHour, reservationMinute, replyNumberType, bannerUsage, imagePosition, messageContentFileName,
-                receiverMemo, messageValidityDateTime, closingRemarkFlag, senderNumber1, senderNumber2, senderNumber3, senderNumber4,
-                senderNumber5, variableText1, variableText2, variableText3, variableText4, variableText5, variableText6, variableText7,
-                variableText8, variableText9, variableText10, carouselFlag, adFlag, rcsReplyNumber, rcsSlide1Image, slide1Content,
-                slide1Button1, slide1Button1Url, slide1Button2, slide1Button2Url, rcsSlide2Image, slide2Content, slide2Button1,
-                slide2Button1Url, slide2Button2, slide2Button2Url, rcsSlide3Image, slide3Content, slide3Button1, slide3Button1Url,
-                slide3Button2, slide3Button2Url, optOutCallbackNumber);
-    }
-
 }

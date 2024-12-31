@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,6 +36,17 @@ public class BatchUploadStore {
             return null;
         }
         return storedData.getExcelData();
+    }
+
+    public List<ExcelData> findAllByKeys(List<String> keys) {
+        List<ExcelData> excelDataList = new ArrayList<>();
+        for (String key : keys) {
+            StoredData storedData = excelDataStore.get(key);
+            if (storedData != null) {
+                excelDataList.add(storedData.excelData);
+            }
+        }
+        return excelDataList;
     }
 
     @Scheduled(fixedRate = 60_000) // 1분마다 실행

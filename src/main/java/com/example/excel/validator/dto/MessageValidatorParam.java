@@ -10,5 +10,4 @@ import lombok.ToString;
 public abstract class MessageValidatorParam {
 
 
-
 }
