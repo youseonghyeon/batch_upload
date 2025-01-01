@@ -1,6 +1,6 @@
-package com.example.excel.controller;
+package com.example.excel.dto;
 
-import com.example.excel.dto.SaveDto;
+import com.example.excel.controller.TestSendDto;
 import com.example.excel.validator.MessageType;
 import com.example.excel.validator.dto.MmsValidatorParam;
 import com.example.excel.validator.dto.RcsCarouselValidatorParam;

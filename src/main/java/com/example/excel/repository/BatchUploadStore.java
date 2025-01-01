@@ -1,6 +1,6 @@
 package com.example.excel.repository;
 
-import com.example.excel.controller.ExcelData;
+import com.example.excel.dto.ExcelData;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,6 +19,12 @@ public class BatchUploadStore {
 
     private static final long TTL_MILLIS = 10 * 60 * 1000; // TTL: 10분
     private final Map<String, StoredData> excelDataStore = new ConcurrentHashMap<>();
+
+    @Scheduled(fixedRate = 60_000) // 1분마다 실행
+    public void cleanupExpiredData() {
+        long currentTime = Instant.now().toEpochMilli();
+        excelDataStore.entrySet().removeIf(entry -> entry.getValue().getExpiryTime() < currentTime);
+    }
 
     public String saveAndGetKey(ExcelData excelData) {
         String key = UUID.randomUUID().toString();
@@ -47,12 +53,6 @@ public class BatchUploadStore {
             }
         }
         return excelDataList;
-    }
-
-    @Scheduled(fixedRate = 60_000) // 1분마다 실행
-    public void cleanupExpiredData() {
-        long currentTime = Instant.now().toEpochMilli();
-        excelDataStore.entrySet().removeIf(entry -> entry.getValue().getExpiryTime() < currentTime);
     }
 
     private boolean isExpired(StoredData storedData) {

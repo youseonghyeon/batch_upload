@@ -1,6 +1,6 @@
 package com.example.excel.service;
 
-import com.example.excel.controller.ExcelData;
+import com.example.excel.dto.ExcelData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;

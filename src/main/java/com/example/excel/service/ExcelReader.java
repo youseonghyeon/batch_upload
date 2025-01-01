@@ -1,6 +1,6 @@
 package com.example.excel.service;
 
-import com.example.excel.controller.ExcelData;
+import com.example.excel.dto.ExcelData;
 import com.example.excel.controller.ReflectionMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -25,14 +25,13 @@ public class ExcelReader {
 
     private final DataFormatter dataFormatter = new DataFormatter(); // 셀 포맷터
 
-
     public boolean supports(String originalFilename) {
         return originalFilename.endsWith(".xlsx") || originalFilename.endsWith(".xls");
     }
 
     public List<ExcelData> read(MultipartFile file) {
         // 파일 확장자 확인
-        if (supports(Objects.requireNonNull(file.getOriginalFilename()))) {
+        if (!supports(Objects.requireNonNull(file.getOriginalFilename()))) {
             throw new IllegalArgumentException("Invalid file type. Only Excel files are allowed.");
         }
         try (InputStream inputStream = file.getInputStream()) {
